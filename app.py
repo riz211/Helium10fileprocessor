@@ -22,13 +22,15 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 ASSETS_DIR = os.path.join(BASE_DIR, "attached_assets")
 
-# Create data directory if it doesn't exist
+# Create necessary directories
 os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(ASSETS_DIR, exist_ok=True) # Added to create ASSETS_DIR if it doesn't exist
 
-# Get file paths
+# Define file paths
 blocked_brands_path = os.path.join(DATA_DIR, "Blocked_Brands.xlsx")
 blocked_product_ids_path = os.path.join(DATA_DIR, "Blocked_Product_IDs.xlsx")
-shipping_legend_path = os.path.join(ASSETS_DIR, "default_shipping_legend.xlsx")
+shipping_legend_path = os.path.join(DATA_DIR, "default_shipping_legend.xlsx") #Updated path
+
 
 # Initialize components
 tutorial_guide = TutorialGuide()
