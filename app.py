@@ -29,6 +29,25 @@ blocked_brands_path = os.path.join(DATA_DIR, "Blocked_Brands.xlsx")
 blocked_product_ids_path = os.path.join(DATA_DIR, "Blocked_Product_IDs.xlsx")
 shipping_legend_path = os.path.join(DATA_DIR, "default_shipping_legend.xlsx")
 
+# Copy default files if they don't exist (for first deployment)
+def ensure_default_files():
+    if not os.path.exists(shipping_legend_path):
+        default_legend = pd.DataFrame({
+            "Weight Range Min (lb)": [0, 1, 2],
+            "Weight Range Max (lb)": [1, 2, 3],
+            "SHIPPING COST": [5.99, 7.99, 9.99]
+        })
+        default_legend.to_excel(shipping_legend_path, index=False)
+
+    if not os.path.exists(blocked_brands_path):
+        pd.DataFrame(columns=["Blocked Brands"]).to_excel(blocked_brands_path, index=False)
+
+    if not os.path.exists(blocked_product_ids_path):
+        pd.DataFrame(columns=["Product ID", "Reason"]).to_excel(blocked_product_ids_path, index=False)
+
+# Ensure default files exist
+ensure_default_files()
+
 # Initialize components
 tutorial_guide = TutorialGuide()
 blocked_items_manager = BlockedItemsManager(blocked_brands_path, blocked_product_ids_path)
