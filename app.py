@@ -8,6 +8,7 @@ from modules.blocked_items import BlockedItemsManager
 from modules.data_processing import process_dataframes, extract_weight_with_packs
 from modules.excel_utils import read_excel_file, calculate_shipping_cost, create_excel_export
 from modules.tutorial import TutorialGuide
+from modules.github_sync import GitHubSync
 import time
 
 # Configure the page
@@ -30,8 +31,10 @@ blocked_brands_path = os.path.join(DATA_DIR, "Blocked_Brands.xlsx")
 blocked_product_ids_path = os.path.join(DATA_DIR, "Blocked_Product_IDs.xlsx")
 shipping_legend_path = os.path.join(ASSETS_DIR, "default_shipping_legend.xlsx")
 
-# Initialize TutorialGuide
+# Initialize components
 tutorial_guide = TutorialGuide()
+blocked_items_manager = BlockedItemsManager(blocked_brands_path, blocked_product_ids_path)
+github_sync = GitHubSync()  # Initialize GitHub sync
 
 # Custom CSS with added animations
 st.markdown("""
@@ -216,6 +219,9 @@ try:
 except Exception as e:
     st.sidebar.error(f"Error loading blocked items: {e}")
 
+
+# Add GitHub sync button at the bottom of the sidebar
+github_sync.render_sync_button()
 
 # Export section for blocked brands
 st.sidebar.markdown("---")  # Add a visual separator

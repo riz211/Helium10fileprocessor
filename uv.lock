@@ -535,6 +535,7 @@ name = "repl-nix-workspace"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "gitpython" },
     { name = "openpyxl" },
     { name = "pandas" },
     { name = "pillow" },
@@ -543,6 +544,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "gitpython", specifier = ">=3.1.44" },
     { name = "openpyxl", specifier = "==3.1.5" },
     { name = "pandas", specifier = "==2.2.3" },
     { name = "pillow", specifier = "<11.0.0" },
