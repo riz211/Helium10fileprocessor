@@ -6,13 +6,10 @@ enableCORS = false
 enableXsrfProtection = false
 
 [theme]
-# Main colors
-primaryColor = "#A682FF"  # Light purple
-backgroundColor = "#FFFFFF"  # White
-secondaryBackgroundColor = "#F5F3FF"  # Very light purple
-textColor = "#262730"  # Dark grey for readability
-
-# Font
+primaryColor = "#A682FF"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F3FF"
+textColor = "#262730"
 font = "sans serif"
 
 [browser]

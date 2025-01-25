@@ -1,7 +1,7 @@
 [project]
-name = "repl-nix-workspace"
+name = "helium10-file-processor"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Streamlit-based e-commerce product data processing application for Amazon sellers"
 requires-python = ">=3.11"
 dependencies = [
     "gitpython>=3.1.44",
@@ -10,3 +10,6 @@ dependencies = [
     "pillow<11.0.0",
     "streamlit==1.31.0",
 ]
+
+[tool.ruff]
+line-length = 120
