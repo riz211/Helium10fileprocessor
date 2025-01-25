@@ -1,13 +1,9 @@
 [server]
 headless = true
+address = "0.0.0.0"
+port = 5000
 enableCORS = false
 enableXsrfProtection = false
-address = "0.0.0.0"
-port = 8501
-baseUrlPath = ""
-maxUploadSize = 200
-enableWebsocketCompression = false
-maxMessageSize = 200
 
 [theme]
 primaryColor = "#A682FF"

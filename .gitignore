@@ -33,7 +33,6 @@ ENV/
 # Application specific
 data/*.xlsx
 !data/default_shipping_legend.xlsx
-!data/.gitkeep
 
 # Streamlit
 .streamlit/secrets.toml
@@ -41,8 +40,3 @@ data/*.xlsx
 # Misc
 .DS_Store
 attached_assets/
-
-# Keep essential directories
-!.streamlit/config.toml
-!modules/
-!data/
