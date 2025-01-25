@@ -39,26 +39,25 @@ class GitHubSync:
                 self.repo.delete_remote('origin')
             self.repo.create_remote('origin', remote_url)
 
-            # Explicitly add requirements.txt if it exists
-            requirements_path = "requirements.txt"
-            if os.path.exists(requirements_path):
-                self.repo.index.add([requirements_path])
-
-            # Stage all other changes
+            # Stage all changes
             self.repo.git.add(A=True)
 
+            # Make sure requirements.txt is tracked
+            if os.path.exists('requirements.txt'):
+                self.repo.git.add('requirements.txt')
+
             # Commit if there are changes
-            if self.repo.is_dirty() or len(self.repo.untracked_files) > 0:
-                self.repo.index.commit("Update application files including requirements.txt")
+            if self.repo.is_dirty(untracked_files=True):
+                self.repo.index.commit("Update application files and requirements.txt")
 
             # Make sure we're on the main branch
             if 'main' not in self.repo.heads:
                 self.repo.create_head('main')
             self.repo.heads.main.checkout()
 
-            # Push changes
+            # Force push changes to ensure sync
             origin = self.repo.remote('origin')
-            origin.push('main:main')
+            origin.push('main:main', force=True)
 
             return True, "Successfully synchronized changes with GitHub!"
 
