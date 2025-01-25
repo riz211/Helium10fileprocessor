@@ -1,0 +1,19 @@
+[server]
+headless = true
+address = "0.0.0.0"
+port = 5000
+enableCORS = false
+enableXsrfProtection = false
+
+[theme]
+# Main colors
+primaryColor = "#A682FF"  # Light purple
+backgroundColor = "#FFFFFF"  # White
+secondaryBackgroundColor = "#F5F3FF"  # Very light purple
+textColor = "#262730"  # Dark grey for readability
+
+# Font
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
