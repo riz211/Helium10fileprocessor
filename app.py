@@ -9,6 +9,8 @@ from modules.data_processing import process_dataframes, extract_weight_with_pack
 from modules.excel_utils import read_excel_file, calculate_shipping_cost, create_excel_export
 from modules.tutorial import TutorialGuide
 import time
+from modules.github_sync import GitHubSync # Added import statement
+
 
 # Configure the page
 st.set_page_config(
@@ -51,6 +53,7 @@ ensure_default_files()
 # Initialize components
 tutorial_guide = TutorialGuide()
 blocked_items_manager = BlockedItemsManager(blocked_brands_path, blocked_product_ids_path)
+github_sync = GitHubSync() # GitHubSync instance created
 
 # Custom CSS with added animations
 st.markdown("""
@@ -354,3 +357,5 @@ if uploaded_files:
             st.error(f"Error processing data: {e}")
 else:
     st.markdown('<div class="metrics-container">Please upload one or more Excel files to begin processing.</div>', unsafe_allow_html=True)
+
+github_sync.render_sync_button() # Calling render_sync_button
