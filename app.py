@@ -19,36 +19,53 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Initialize paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, "data")
+# Initialize paths with better error handling for cloud deployment
+try:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    DATA_DIR = os.path.join(BASE_DIR, "data")
 
-# Create necessary directories
-os.makedirs(DATA_DIR, exist_ok=True)
+    # Create necessary directories with verbose logging
+    if not os.path.exists(DATA_DIR):
+        st.info(f"Creating data directory at {DATA_DIR}")
+        os.makedirs(DATA_DIR, exist_ok=True)
 
-# Define file paths
-blocked_brands_path = os.path.join(DATA_DIR, "Blocked_Brands.xlsx")
-blocked_product_ids_path = os.path.join(DATA_DIR, "Blocked_Product_IDs.xlsx")
-shipping_legend_path = os.path.join(DATA_DIR, "default_shipping_legend.xlsx")
+    # Define file paths
+    blocked_brands_path = os.path.join(DATA_DIR, "Blocked_Brands.xlsx")
+    blocked_product_ids_path = os.path.join(DATA_DIR, "Blocked_Product_IDs.xlsx")
+    shipping_legend_path = os.path.join(DATA_DIR, "default_shipping_legend.xlsx")
 
-# Copy default files if they don't exist (for first deployment)
-def ensure_default_files():
-    if not os.path.exists(shipping_legend_path):
-        default_legend = pd.DataFrame({
-            "Weight Range Min (lb)": [0, 1, 2],
-            "Weight Range Max (lb)": [1, 2, 3],
-            "SHIPPING COST": [5.99, 7.99, 9.99]
-        })
-        default_legend.to_excel(shipping_legend_path, index=False)
+    # Copy default files if they don't exist (for first deployment)
+    def ensure_default_files():
+        if not os.path.exists(shipping_legend_path):
+            st.info("Creating default shipping legend file...")
+            default_legend = pd.DataFrame({
+                "Weight Range Min (lb)": [0, 1, 2],
+                "Weight Range Max (lb)": [1, 2, 3],
+                "SHIPPING COST": [5.99, 7.99, 9.99]
+            })
+            default_legend.to_excel(shipping_legend_path, index=False)
+            st.success("Created default shipping legend file.")
 
-    if not os.path.exists(blocked_brands_path):
-        pd.DataFrame(columns=["Blocked Brands"]).to_excel(blocked_brands_path, index=False)
+        if not os.path.exists(blocked_brands_path):
+            st.info("Creating blocked brands file...")
+            pd.DataFrame(columns=["Blocked Brands"]).to_excel(blocked_brands_path, index=False)
+            st.success("Created blocked brands file.")
 
-    if not os.path.exists(blocked_product_ids_path):
-        pd.DataFrame(columns=["Product ID", "Reason"]).to_excel(blocked_product_ids_path, index=False)
+        if not os.path.exists(blocked_product_ids_path):
+            st.info("Creating blocked product IDs file...")
+            pd.DataFrame(columns=["Product ID", "Reason"]).to_excel(blocked_product_ids_path, index=False)
+            st.success("Created blocked product IDs file.")
 
-# Ensure default files exist
-ensure_default_files()
+    # Ensure default files exist with error handling
+    try:
+        ensure_default_files()
+    except Exception as e:
+        st.error(f"Error creating default files: {str(e)}")
+        st.info("The application will continue to run with limited functionality.")
+
+except Exception as e:
+    st.error(f"Error initializing application: {str(e)}")
+    st.info("Please contact support if the issue persists.")
 
 # Initialize components
 tutorial_guide = TutorialGuide()
